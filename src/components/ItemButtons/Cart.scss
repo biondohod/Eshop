@@ -1,0 +1,132 @@
+.cart {
+  display: grid;
+  grid-template-columns: 30px 51px 30px;
+  row-gap: 4px;
+
+  &__total {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    background-color: #B682FAEB;
+    color: #fff;
+
+    &:hover {
+      background-color: #A15EEA;
+    }
+  }
+
+  &__input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    padding-left: 16px;
+    border: none;
+    background-color: #E4E4E4;
+    color: #000;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__btn-remove {
+    grid-column: -1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    border-radius: 4px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+
+    &:hover {
+      background-color: #3b3534;
+    }
+  }
+}
+
+.items {
+  &__list--cart {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(612px, 1fr));
+    row-gap: 16px;
+    margin-top: 16px;
+  }
+
+    &__item--cart {
+      overflow: visible;
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.5fr;
+      grid-template-rows: 1fr;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      column-gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      .items__item-image {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .items__item-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+        }
+
+      .items__item-title {
+        h2{
+          font-size: 24px;
+          font-weight: 700;
+          color: #000;
+        }
+      }
+
+      .items__item-price {
+          font-size: 24px;
+          font-weight: 700;
+          color: #000;
+      }
+
+      .items__item-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        height: 100%;
+      }
+
+      .items__item-buttons--cart {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        height: 100%;
+      }
+    }
+
+}

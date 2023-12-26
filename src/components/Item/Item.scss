@@ -1,0 +1,56 @@
+.item {
+  display: grid;
+  grid-template-columns: 560px 1fr;
+  gap: 32px;
+  align-items: center;
+  //flex-wrap: wrap;
+
+  &__slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &-carousel {
+      max-width: 480px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    &-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      border: none;
+      padding: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      background-color: #000;
+      color: #fff;
+
+      &:hover {
+        background-color: #3b3534;
+      }
+
+      &:disabled {
+        background-color: #E4E4E4;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__images {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s ease-in-out;
+  }
+
+  &__image {
+    width: 480px;
+  }
+
+
+}
