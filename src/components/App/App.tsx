@@ -64,7 +64,7 @@ const App: FC = () => {
                                     cart={cart}
                                     setCart={setCart}
                             />} />
-                            <Route path="/404" element={<Page404/>} />
+                            <Route path="*" element={<Page404/>} />
                         </Routes>
                     </Suspense>
             </BrowserRouter>
