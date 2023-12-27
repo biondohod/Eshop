@@ -1,3 +1,4 @@
+@import "src/styles/variables.scss";
 .items {
   &__filters {
     display: flex;
@@ -31,7 +32,7 @@
       transition: border-color 0.3s ease-in-out;
 
       &:focus {
-        border-color: #B682FAEB;
+        border-color: $main-color-light;
       }
     }
 

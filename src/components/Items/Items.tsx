@@ -1,10 +1,12 @@
 import React, {FC, useEffect, JSX, useState} from "react";
 import './Items.scss';
 import {Link, useParams} from "react-router-dom";
-import {getAllItems, getCategoryItems} from "../../services/EshopService.ts";
+import useEshopService from "../../services/EshopService.ts";
 import {SetStateFunc, SingleItem} from "../../types/Types.ts";
 import ItemButtons from "../ItemButtons/ItemButtons.tsx";
 import EmptyElement from "../EmptyElement/EmptyElement.tsx";
+import Spinner from "../Spinner/Spinner.tsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
 
 type ItemsProps = {
     setItems: SetStateFunc<SingleItem[] | undefined>,
@@ -20,6 +22,7 @@ type CartCounts = {
     [key: number]: number
 }
 const Items: FC<ItemsProps> = (props) => {
+    const {loading, error, getAllItems, getCategoryItems} = useEshopService()
     const {
         setItems,
         filteredItems,
@@ -120,13 +123,19 @@ const Items: FC<ItemsProps> = (props) => {
         return <EmptyElement text={"There ain't any items yet. We hope it'll change soon!"}/>;
     }
 
+    const renderedItems: React.JSX.Element[] | JSX.Element = !(loading || error || !filteredItems) ?renderItems() : <EmptyElement text={"There ain't any items yet. We hope it'll change soon!"}/>
+    const spinner: JSX.Element | null = loading ? <Spinner/> : null;
+    const errorMessage: JSX.Element | null = error ? <ErrorMessage/> : null;
+
     return (
         <>
             {isCart ?
-                <p className="cart__total">{`Total: ${cartTotal}`}</p>
+                <p className="cart__total">{`Total: ${isNaN(cartTotal) ? 0 : cartTotal}`}</p>
                 : <> </>}
             <ul className={`items__list ${isCart ? "items__list--cart" : ""}`}>
-                {renderItems()}
+                {renderedItems}
+                {spinner}
+                {errorMessage}
             </ul>
         </>
 

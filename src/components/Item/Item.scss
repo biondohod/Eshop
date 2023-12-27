@@ -3,17 +3,33 @@
   grid-template-columns: 560px 1fr;
   gap: 32px;
   align-items: center;
-  //flex-wrap: wrap;
+  padding: 16px;
+
+  @media(max-width: 1024px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+  }
 
   &__slider {
     display: flex;
     align-items: center;
     gap: 8px;
 
+    @media(max-width: 768px) {
+      position: relative;
+      align-items: center;
+      justify-content: center;
+    }
+
     &-carousel {
       max-width: 480px;
       overflow: hidden;
       border-radius: 8px;
+
+      @media(max-width: 575px) {
+        max-width: 280px;
+      }
     }
 
     &-btn {
@@ -28,6 +44,23 @@
       transition: background-color 0.3s ease-in-out;
       background-color: #000;
       color: #fff;
+
+      @media(max-width: 400px) {
+        position: absolute;
+        bottom: -40px;
+      }
+
+      &--prev {
+        @media(max-width: 400px) {
+          left: 0;
+        }
+      }
+
+      &--next {
+        @media(max-width: 400px) {
+          right: 0;
+        }
+      }
 
       &:hover {
         background-color: #3b3534;
@@ -50,7 +83,22 @@
 
   &__image {
     width: 480px;
+    @media(max-width: 575px) {
+      width: 280px;
+    }
   }
 
+  &__wrapper {
+    @media(max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+    }
 
+    @media(max-width: 400px) {
+      margin-top: 16px;
+    }
+  }
 }

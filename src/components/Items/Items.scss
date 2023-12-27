@@ -1,3 +1,4 @@
+@import "src/styles/variables.scss";
 .items {
   &__content {
     padding: 20px;
@@ -96,11 +97,11 @@
       }
 
       &--fav {
-        background-color: #B682FAEB;
+        background-color: $main-color-light;
         color: #fff;
 
         &:hover {
-          background-color: #A15EEA;
+          background-color: $main-color;
         }
 
         &--active {

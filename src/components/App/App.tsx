@@ -3,13 +3,16 @@ import AppHeader from "../AppHeader/AppHeader.tsx";
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import {SingleItem} from "../../types/Types.ts";
 import {ItemsPageProps} from "../../pages/ItemsPage.tsx";
-import {getLocalStorageArray} from "../../services/EshopService.ts";
 import {ItemPageProps} from "../../pages/ItemPage.tsx";
+import useEshopService from "../../services/EshopService.ts";
+import Spinner from "../Spinner/Spinner.tsx";
 
 const ItemsPage: FC<ItemsPageProps> = lazy(() => import('../../pages/ItemsPage.tsx'));
 const ItemPage: FC<ItemPageProps> = lazy(() => import('../../pages/ItemPage.tsx'));
+const Page404: FC = lazy(() => import('../../pages/Page404/Page404.tsx'));
 
 const App: FC = () => {
+    const {getLocalStorageArray} = useEshopService();
     const [activePage, setActivePage] = useState<number>(1);
     const [favorites, setFavorites] = useState<SingleItem[] | []>([]);
     const [cart, setCart] = useState<SingleItem[] | []>([]);
@@ -33,11 +36,11 @@ const App: FC = () => {
                     setActivePage={setActivePage}
                     cart={cart}
                 />
-                    <Suspense fallback={<div>loading...</div>}>
+                    <Suspense fallback={<Spinner/>}>
                         <Routes>
                             <Route path="/" element={
-                                <ItemsPage 
-                                    activePage={activePage} 
+                                <ItemsPage
+                                    activePage={activePage}
                                     setActivePage={setActivePage}
                                     favorites={favorites}
                                     setFavorites={setFavorites}
@@ -45,8 +48,8 @@ const App: FC = () => {
                                     setCart={setCart}
                                 />} />
                             <Route path={`/category/:id`} element={
-                                <ItemsPage 
-                                    activePage={activePage} 
+                                <ItemsPage
+                                    activePage={activePage}
                                     setActivePage={setActivePage}
                                     favorites={favorites}
                                     setFavorites={setFavorites}
@@ -61,6 +64,7 @@ const App: FC = () => {
                                     cart={cart}
                                     setCart={setCart}
                             />} />
+                            <Route path="*" element={<Page404/>} />
                         </Routes>
                     </Suspense>
             </BrowserRouter>

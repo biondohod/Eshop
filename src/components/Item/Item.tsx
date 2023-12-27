@@ -1,24 +1,27 @@
 import {FC, useState, useEffect, JSX} from "react";
 import "./item.scss";
 import {useParams} from "react-router-dom";
-import {getSingleItem} from "../../services/EshopService.ts";
+import useEshopService from "../../services/EshopService.ts";
 import {SingleItem} from "../../types/Types.ts";
 import ItemButtons from "../ItemButtons/ItemButtons.tsx";
 import {ItemPageProps} from "../../pages/ItemPage.tsx";
 import '../Items/Items.scss';
+import Spinner from "../Spinner/Spinner.tsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
+import EmptyElement from "../EmptyElement/EmptyElement.tsx";
 const item: FC<ItemPageProps> = (props) => {
+    const {loading, error, getSingleItem} = useEshopService()
     const {favorites, setFavorites, cart, setCart} = props;
     const itemId: string | undefined = useParams().id;
     const [item, setItem] = useState<SingleItem | undefined>(undefined);
     const [sliderPosition, setSliderPosition] = useState<number>(0);
     const [imagesCount, setImagesCount] = useState<number>(0);
 
-    useEffect((): void => {
-        // setFavorites([])
+    useEffect(() => {
         if (itemId) {
             getSingleItem(parseInt(itemId)).then((response) => {
                 setItem(response);
-                const imagesCountTemp: number | undefined = response.images.length;
+                const imagesCountTemp: number | undefined = response.images?.length;
                 if (imagesCountTemp) {
                     setImagesCount(imagesCountTemp);
                 } else {
@@ -26,24 +29,38 @@ const item: FC<ItemPageProps> = (props) => {
                 }
             });
         }
+
+        const handleResize = (): void => {
+            if (window.innerWidth <= 575) {
+                setSliderPosition(0);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+
     }, []);
 
     const handlePrevClick = (): void => {
-        const minPosition: number = -(imagesCount - 1) * 480;
-        const newPosition: number = sliderPosition + 480;
+        const minPosition: number = -(imagesCount - 1) * (window.innerWidth < 575 ? 280 : 480);
+        const newPosition: number = sliderPosition + (window.innerWidth < 575 ? 280 : 480);
         setSliderPosition(newPosition > 0 ? minPosition : newPosition);
     };
 
     const handleNextClick = (): void => {
-        const minPosition: number = -(imagesCount - 1) * 480;
+        const minPosition: number = -(imagesCount - 1) * (window.innerWidth < 575 ? 280 : 480);
         const maxPosition: number = 0;
-        const newPosition: number = sliderPosition - 480;
+        const newPosition: number = sliderPosition - (window.innerWidth < 575 ? 280 : 480);
         setSliderPosition(newPosition < minPosition ? maxPosition : newPosition);
     };
 
+
     const renderItem = (): JSX.Element => {
         if (!item) {
-            return <>There is no item :(</>
+            return <EmptyElement text={'There is no item'}/>
         }
         return (
             <div className="item">
@@ -98,10 +115,15 @@ const item: FC<ItemPageProps> = (props) => {
         return <>There are no images :(</>
     }
 
+    const renderedItem: JSX.Element | null = !(loading || error || !item) ? renderItem() : null;
+    const spinner: JSX.Element | null = loading ? <Spinner/> : null;
+    const errorMessage: JSX.Element | null = error ? <ErrorMessage/> : null;
 
     return (
         <>
-            {renderItem()}
+            {renderedItem}
+            {spinner}
+            {errorMessage}
         </>
     );
 };

@@ -4,7 +4,7 @@ import heartIcon from '../../assets/images/heart.svg';
 import cartIcon from '../../assets/images/cart.svg';
 import './AppHeader.scss';
 import {Link} from "react-router-dom";
-import {getAllCategories} from "../../services/EshopService.ts";
+import useEshopService from "../../services/EshopService.ts";
 import {Category, SetStateFunc, SingleItem} from "../../types/Types.ts";
 
 type AppHeaderProps = {
@@ -13,6 +13,7 @@ type AppHeaderProps = {
     setActivePage: SetStateFunc<number>,
 };
 const AppHeader: FC<AppHeaderProps> = (props) => {
+    const {getAllCategories} = useEshopService();
     const {favorites, setActivePage, cart} = props;
     const [categories, setCategories] = useState<Category[] | undefined>(undefined);
     const [selectedItem, setSelectedItem] = useState<number | null | string>(null);
@@ -41,7 +42,7 @@ const AppHeader: FC<AppHeaderProps> = (props) => {
                 )
             })
         }
-        return <>There are no categories :(</>
+        return <>Categories loading error</>
     }
 
     return (
@@ -92,5 +93,6 @@ const AppHeader: FC<AppHeaderProps> = (props) => {
         </header>
     );
 }
+
 
 export default AppHeader;

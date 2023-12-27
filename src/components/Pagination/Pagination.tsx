@@ -1,7 +1,7 @@
 import {FC, JSX, useEffect} from "react";
 import './Pagination.scss';
 import {Filter, SetStateFunc} from "../../types/Types.ts";
-import {smoothScrollToTop} from "../../services/EshopService.ts";
+import useEshopService from "../../services/EshopService.ts";
 
 type PaginationProps = {
     pagesCount: number,
@@ -11,6 +11,7 @@ type PaginationProps = {
     setFilter: SetStateFunc<Filter>,
 };
 const Pagination: FC<PaginationProps> = (props) => {
+    const {smoothScrollToTop} = useEshopService();
     const {pagesCount, activePage, setActivePage, filter, setFilter} = props;
 
     useEffect(() => {

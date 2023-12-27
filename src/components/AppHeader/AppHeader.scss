@@ -1,3 +1,4 @@
+@import "src/styles/variables.scss";
 .header {
   padding: 20px;
 
@@ -41,20 +42,20 @@
         width: 100%;
         height: 2px;
         border-radius: 8px;
-        background-color: #B682FAEB;
+        background-color: $main-color-light;
         transition: all 0.3s ease-in-out;
         opacity: 0;
       }
 
       &:hover {
-        color: #B682FAEB;
+        color: $main-color-light;
       }
 
       &--selected {
         &:after {
           opacity: 1;
         }
-        color: #B682FAEB;
+        color: $main-color-light;
       }
     }
   }
